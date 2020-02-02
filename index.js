@@ -6,7 +6,7 @@ const cors = require('cors')
 
 const PORT = process.env.PORT || 9001
 
-const books = require('./books.json') || {}
+const { books } = require('./books.json') || {}
 
 const handleError = (res, reason, message, code) => {
     console.log("ERROR: " + reason);

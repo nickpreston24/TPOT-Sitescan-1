@@ -1,0 +1,21 @@
+http://localhost:9001/api/books
+###
+
+GET http://localhost:9001/api/books/1
+###
+
+GET https://site-scan-beta.herokuapp.com/api/books/1 HTTP/1.1
+###
+
+GET https://site-scan-beta.herokuapp.com/cool HTTP/1.1
+
+
+# POST https://site-scan-beta.herokuapp.com/api/books/add HTTP/1.1
+# Content-Type: application/json
+
+# {
+    #  {
+    #   "Title": "The Two Babylons",
+    #   "Author": "Alexander Hislop"
+    # },
+# }
