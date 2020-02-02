@@ -1,3 +1,12 @@
 {
-    "": "How to Cook Everything"
+    "books": [
+        {
+            "Title": "The Holy Bible",
+            "Author": "God"
+        },
+        {
+            "Title": "How to Cook Everything",
+            "Author": "Mark Bittman"
+        }        
+    ]
 }
