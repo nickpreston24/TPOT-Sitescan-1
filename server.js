@@ -6,14 +6,14 @@ const PORT = process.env.PORT || 9001
 const app = express()
     .use(express.static(path.join(__dirname, 'public')))
     .set('views', path.join(__dirname, 'views'))
-    .set('view engine', 'ejs')
-    .get('/', (request, response) => response.render('pages/index'))
-    .get('/cool', (request, response) => response.send(cool()))
+    .get('/', (_, response) => response.render('pages/index'))
+    .get('/hello', (_, response) => response.send(`Hello there!  Come here my friend, I won't hurt you.`))
+    .get('/cool', (_, response) => response.send(cool()))
     .listen(PORT, () => console.log(`listening on port ${PORT}`))
 
 // app.get('/', (request, response) => {
 //     console.log(request.body);
-//     response.send(`Hello there!  Come here my friend, I won't hurt you.`)
+//     response.send()
 // })
 
 // let server = app.listen(PORT, () => {

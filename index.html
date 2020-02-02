@@ -31,10 +31,13 @@
 </body>
 <script>
     {
-        fetch(`https://site-scan-beta.herokuapp.com/`)
-        .then(response=> console.log(response))
-        .catch(console.log)
-        // alert('hello')
+        fetch(`https://site-scan-beta.herokuapp.com/cool`)
+            .then(response => console.log(response))
+            .catch(console.log)
+
+        fetch(`localhost:5000/cool`)
+            .then(response => console.log(response))
+            .catch(console.log)
     }
 </script>
 
