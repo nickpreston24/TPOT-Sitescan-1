@@ -4,18 +4,31 @@ http://localhost:9001/api/books
 GET http://localhost:9001/api/books/1
 ###
 
-GET https://site-scan-beta.herokuapp.com/api/books/1 HTTP/1.1
+GET https://site-scan-beta.herokuapp.com/api/books HTTP/1.1
+###
+
+GET /https://site-scan-beta.herokuapp.comapi/books/1 HTTP/1.1
 ###
 
 GET https://site-scan-beta.herokuapp.com/cool HTTP/1.1
+###
 
+POST http://localhost:9001/api/checkout/update HTTP/1.1
+content-type: application/json
 
-# POST https://site-scan-beta.herokuapp.com/api/books/add HTTP/1.1
-# Content-Type: application/json
+{
+    "title": "Obedience",
+    "firebasePath": "/tmp/Obedience.docx",
+    "author": "Victor Hafichuk",
+    "dateCreated": "2-1-2020"
+}
 
-# {
-    #  {
-    #   "Title": "The Two Babylons",
-    #   "Author": "Alexander Hislop"
-    # },
-# }
+POST https://site-scan-beta.herokuapp.com/api/checkout/update HTTP/1.1
+content-type: application/json
+
+{
+    "title": "Obedience",
+    "firebasePath": "/tmp/Obedience.docx",
+    "author": "Victor Hafichuk",
+    "dateCreated": "2-1-2020"
+}

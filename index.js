@@ -10,8 +10,7 @@ const { books } = require('./books.json') || {}
 
 const handleError = (res, reason, message, code) => {
     console.log("ERROR: " + reason);
-    res.status(code || 500).json({ "error": message });
-}
+    res.status(code || 500).json({ "error": message });}
 
 const app = express()
     .use(bodyParser.json())
@@ -26,7 +25,12 @@ const app = express()
     .get("/api/books/:id", function (request, response) {
         let { id } = request.params
         console.log(`retreiving book ${id}`)
-        return response.send(books[id]);
+        return response.send(books[id])
     })
+    .post('/api/checkout/update', function (request, response) {
+        let paper = request.body
+        console.log(request.body);
+        return response.send(200)
+    })   
 
     .listen(PORT, () => console.log(`listening on port ${PORT}`))
