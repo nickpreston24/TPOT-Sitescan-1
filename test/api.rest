@@ -1,27 +1,13 @@
-http://localhost:9001/api/books
-###
-
-GET http://localhost:9001/api/books/1
-###
+#### PRODUCTION ####
 
 GET https://site-scan-beta.herokuapp.com/api/books HTTP/1.1
 ###
 
-GET /https://site-scan-beta.herokuapp.comapi/books/1 HTTP/1.1
+GET https://site-scan-beta.herokuapp.com/api/books/1 HTTP/1.1
 ###
 
-GET https://site-scan-beta.herokuapp.com/cool HTTP/1.1
+GET https://site-scan-beta.herokuapp.com/api/teachings HTTP/1.1
 ###
-
-POST http://localhost:9001/api/checkout/update HTTP/1.1
-content-type: application/json
-
-{
-    "title": "Obedience",
-    "firebasePath": "/tmp/Obedience.docx",
-    "author": "Victor Hafichuk",
-    "dateCreated": "2-1-2020"
-}
 
 POST https://site-scan-beta.herokuapp.com/api/checkout/update HTTP/1.1
 content-type: application/json
@@ -32,3 +18,26 @@ content-type: application/json
     "author": "Victor Hafichuk",
     "dateCreated": "2-1-2020"
 }
+
+#### LOCAL ####
+http://localhost:9001/api/books
+###
+
+GET http://localhost:9001/api/books/1
+###
+
+
+http://localhost:9001/api/teachings
+###
+
+
+POST http://localhost:9001/api/checkout/update HTTP/1.1
+content-type: application/json
+
+{
+    "title": "Obedience",
+    "firebasePath": "/tmp/Obedience.docx",
+    "author": "Victor Hafichuk",
+    "dateCreated": "2-1-2020"
+}
+###

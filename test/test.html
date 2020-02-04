@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head>    
     <title>
 
     </title>
@@ -35,21 +35,10 @@
 </body>
 <script>
     {
-        fetch(`https://site-scan-beta.herokuapp.com/cool`)
-            .then(response => console.log(response))
-            .catch(console.log)
-
         fetch(`https://site-scan-beta.herokuapp.com/api/books`)
-            .then(response => {
-                console.log('books: ', response);
-                document.getElementById('berks')
-                    .innerHTML = `<p>${response}</p>`
-            })
-
-        fetch(`localhost:9001/cool`)
             .then(response => console.log(response))
-            .catch(console.log)
+            .catch(console.log)        
     }
-</script>
+</script
 
 </html>
