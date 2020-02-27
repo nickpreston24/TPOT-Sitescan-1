@@ -1,7 +1,7 @@
 
 const router = require("express").Router();
 
-const teachingRoutes = require("./teaching");
+const teachingRoutes = require("./teachings");
 
 router.use("/teachings", teachingRoutes);
 

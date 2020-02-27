@@ -27,7 +27,7 @@ GET http://localhost:9001/api/books/1
 ###
 
 
-http://localhost:9001/api/teachings
+http://localhost:9001/api/papers
 ###
 
 

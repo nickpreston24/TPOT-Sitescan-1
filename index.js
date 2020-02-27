@@ -3,6 +3,14 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const path = require('path')
 const cors = require('cors')
+const axios = require('axios')
+
+const neode = require('neode')
+    .fromEnv()
+    .withDirectory(path.join(__dirname, 'models'))
+
+// console.log('instance: ', !!instance);
+// instance.setEnterprise(true)
 
 const PORT = process.env.PORT || 9001
 
@@ -13,14 +21,30 @@ const handleError = (res, reason, message, code) => {
     res.status(code || 500).json({ "Error": message });
 }
 
-var routes = require('./routes')
-console.log('routes: ', !!routes);
+// var routes = require('./routes')
+// console.log('routes: ', !!routes);
+console.log('neode instance: ', !!neode);
+
+// Harvest Haven 404 test:
+// axios.get('https://www.harvesthaven.com/pages/organic-hemp-seeds')
+//     .then(response => {
+//         // console.log(response.data)
+//         console.log("status", response.status)
+//     })
+//     .catch(error => {
+//         if (error) {
+//             console.error(error.message)
+//             console.error(error.response.status)
+//             // console.error(error.response.data)
+//             // console.error(error.response.headers)
+//         }
+//     })
 
 const app = express()
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: true }))
     .use(cors())
-    .use(routes)
+    .use(require('./routes/api/papers')(neode))
     .get('/', (_, response) => response.send(200))
     .get('/hello', (_, response) => response.send(`Hello there!  Come here my friend, I won't hurt you.`))
     .get('/cool', (_, response) => response.send(cool()))
