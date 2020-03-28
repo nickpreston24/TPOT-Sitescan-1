@@ -32,4 +32,6 @@ fs.readdir(path, function(err, items) {
             console.log(filename, ' - size: ' + stats["size"]);
         });
     }
+
+    return items;
 });
