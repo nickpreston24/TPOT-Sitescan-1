@@ -2,15 +2,11 @@
 // The idea comes from the Theo-Auto pt.11 particle, CHAI: https://www.thepathoftruth.com/what-the-lord-has-done-with-me/part11/p10.htm)
 
 const fs = require('fs')
+const { getAllFiles } = require('./fs-extras')
 
 const parseScriptures = (text) => {
-
     let pattern = "\d+";
-
 }
-console.log('running...')
-// console.log('dir:', fs.readdir('israel-god-unjust.txt'), null, ()=>{})
-// let filePath = 
  
 if (process.argv.length <= 2) {
     console.log("Usage: " + __filename + " path/to/directory");
@@ -20,18 +16,36 @@ if (process.argv.length <= 2) {
 var path = process.argv[2];
  
 // List all files in dir
-fs.readdir(path, function(err, items) {
-    if(!items || items.length === 0)
-        return;
+// const getFilesAsync = async (path, filter) =>{
+//     var files  = []
 
-    for (var i=0; i<items.length; i++) {
+//     fs.readdir(path, function(err, items) {
+//         if(!items || items.length === 0)
+//             return;
 
-        var filename = path + '/' + items[i];
- 
-        fs.stat(filename, function(err, stats) {
-            console.log(filename, ' - size: ' + stats["size"]);
-        });
-    }
+//         for (var i=0; i<items.length; i++) {
 
-    return items;
-});
+//             var filename = path + '/' + items[i];
+    
+//             files.push(filename)
+
+//             fs.stat(filename, function(err, stats) {
+//                 console.log(filename, ' - size: ' + stats["size"]);
+//             });
+//         }
+//         // console.log('ret')
+//         // return items || {};
+//     });
+
+//     return files
+// }
+
+async function main () {
+    
+    var files = getAllFiles(path).files
+    console.log('Found: ', files)
+
+    parseScriptures()
+}
+
+main()
