@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@cuties/cutie": "^1.7.6",
     "body-parser": "^1.19.0",
     "cheerio": "^1.0.0-rc.3",
     "cool-ascii-faces": "^1.3.4",

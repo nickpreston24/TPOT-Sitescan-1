@@ -9,6 +9,11 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@cuties/cutie@^1.7.6":
+  version "1.7.6"
+  resolved "https://registry.yarnpkg.com/@cuties/cutie/-/cutie-1.7.6.tgz#10e4613c98feac45b5ae44dc7e37f6e51684a907"
+  integrity sha512-GUXN7tpWNyfzRmp7xugrWPsjEy7gxTQQmHPyA7zxYTN8PBlpSnONsyxMHvQjiy/VjKSQzhjFwKRHm8CXaCnAIA==
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"

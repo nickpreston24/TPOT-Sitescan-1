@@ -36,4 +36,18 @@ const getAllFiles = relativePath => {
   return allFiles;
 };
 
-module.exports = { getAllFiles };
+function readFileAsync(filePath, options = {}) {
+  return new Promise((resolve) => {
+      fs.readFile(filePath, options, (error, buffer) => {
+          if (error)
+              throw error;
+          if (!buffer)
+              throw new Error('Buffer could not be initialized!');
+          // console.log("file data:", data);
+          resolve(buffer);
+      });
+  });
+}
+
+
+module.exports = { getAllFiles, readFileAsync };

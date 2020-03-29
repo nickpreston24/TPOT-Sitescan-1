@@ -2,23 +2,19 @@
 // The idea comes from the Theo-Auto pt.11 particle, CHAI: https://www.thepathoftruth.com/what-the-lord-has-done-with-me/part11/p10.htm)
 
 const fs = require('fs')
-const { getAllFiles } = require('./fs-extras')
+const { getAllFiles, readFileAsync } = require('./fs-extras')
+const AsyncObject = require('@cuties/cutie').AsyncObject
 
-const parseScriptures = (text) => {
-    let pattern = "\d+";
+const parseScriptures = (text, pattern) => {
+    const matches = text.match(pattern) || [];
+    return matches
 }
- 
-if (process.argv.length <= 2) {
-    console.log("Usage: " + __filename + " path/to/directory");
-    process.exit(-1);
-}
- 
-var path = process.argv[2];
- 
+
+
 // List all files in dir
 // const getFilesAsync = async (path, filter) =>{
-//     var files  = []
-
+    //     var files  = []
+    
 //     fs.readdir(path, function(err, items) {
 //         if(!items || items.length === 0)
 //             return;
@@ -40,12 +36,88 @@ var path = process.argv[2];
 //     return files
 // }
 
-async function main () {
-    
-    var files = getAllFiles(path).files
-    console.log('Found: ', files)
+class ReadDataByPath extends AsyncObject {
 
-    parseScriptures()
+    constructor(path, encoding) { super(path, encoding); }
+
+    asyncCall = () => fs.readFile
+}
+
+const patterns = {
+    "prefix":"(?<Scripture>[a-zA-Z]+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]+\r*\n)(?<Text>.*?)(?:\r*\n){2}",
+    "postfix": "(?<Text>(?:\").*?)((?<Scripture>\(\w+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}\)\.?))"
+}
+
+class WrittenFile extends AsyncObject {
+
+    constructor(path, content) { super(path,content) }
+
+    asyncCall(){
+        return (path, content, callback) => {
+            this.path = path     
+            // sample: “Every way of a man is right in his own eyes, but the LORD weighs the hearts” (Proverbs 21:2 HNV).
+            // let pattern = /((\w+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}).*?)(.*?)(?:(?:\r*\n){2})/gs;    
+
+            let sp2 = /(?<Scripture>[a-zA-Z]+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]+\r*\n)(?<Text>.*?)(?:\r*\n){2}/gs
+            let sp1 = /(.*?)(\(\w+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}\)\.?)/g;
+         
+
+            {/* let scripturePattern2 = /pizza/gs
+            
+            // (?<Text>(?:\").*?)((?<Scripture>\(\w+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}\)\.?))
+
+            // (?:\r*\n){2} // empty line
+            // (\w.*?)\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}  Scripture Reference
+
+            // Postfix scripture
+            //  */}
+
+            let result = parseScriptures(content, sp2)
+            console.log('resulting text: ', result.join('\n'))
+            fs.writeFile(path, result.join(''), callback)
+        }
+    }
+
+    onResult(){
+        return this.path
+    }
+
+    onError(error){
+        console.log('ya done goofed!', error)
+    }
+}
+
+// async 
+function main () {
+
+    if (process.argv.length <= 2) {
+        console.log("Usage: " + __filename + " path/to/directory");
+        process.exit(-1);
+    } 
+
+    var path = process.argv[2];
+
+    var files = getAllFiles(path).files.filter(n=>n.includes('.txt'));
+
+    console.log('Matching files: ', files);
+
+    new WrittenFile('./output.txt',
+        new ReadDataByPath(files[0], 'utf8')
+    )
+    .call()
+
+    // let text = 
+    //     await fs.readFile(filePath, options, (error, buffer) => {
+    //         if (error)
+    //             throw error;
+    //         if (!buffer)
+    //             throw new Error('Buffer could not be initialized!');
+    //         console.log("file data:", data);           
+    //     });
+    // await fs.readFileAsync(files[0])
+
+
+    // parseScriptures(text)
 }
 
 main()
