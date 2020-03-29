@@ -10,7 +10,6 @@ const parseScriptures = (text, pattern) => {
     return matches
 }
 
-
 // List all files in dir
 // const getFilesAsync = async (path, filter) =>{
     //     var files  = []
@@ -55,26 +54,20 @@ class WrittenFile extends AsyncObject {
     asyncCall(){
         return (path, content, callback) => {
             this.path = path     
-            // sample: “Every way of a man is right in his own eyes, but the LORD weighs the hearts” (Proverbs 21:2 HNV).
-            // let pattern = /((\w+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}).*?)(.*?)(?:(?:\r*\n){2})/gs;    
 
-            let sp2 = /(?<Scripture>[a-zA-Z]+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]+\r*\n)(?<Text>.*?)(?:\r*\n){2}/gs
-            let sp1 = /(.*?)(\(\w+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}\)\.?)/g;
-         
+            // sample: “Every way of a man is right in his own eyes, but the LORD weighs the hearts” (Proverbs 21:2 HNV).            
 
-            {/* let scripturePattern2 = /pizza/gs
+            let prefixScripture = /(?<Scripture>[a-zA-Z]+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]+\r*\n)(?<Text>.*?)(?:\r*\n){2}/gsm
+            let postFixScripture = /^(?<Text>.*?)(?<Scripture>\(\w+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}\)\.?)/gm;         
+           
+            const prefixed = parseScriptures(content, prefixScripture);
+            const postfixed = parseScriptures(content, postFixScripture);
+
+            let result = [ prefixed, postfixed].flat().map(r=>r.trim()).join('\n\n')
             
-            // (?<Text>(?:\").*?)((?<Scripture>\(\w+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}\)\.?))
-
-            // (?:\r*\n){2} // empty line
-            // (\w.*?)\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}  Scripture Reference
-
-            // Postfix scripture
-            //  */}
-
-            let result = parseScriptures(content, sp2)
-            console.log('resulting text: ', result.join('\n'))
-            fs.writeFile(path, result.join(''), callback)
+            console.log('resulting text: ', result)
+  
+            fs.writeFile(path, result, callback)
         }
     }
 
