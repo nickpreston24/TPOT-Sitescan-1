@@ -7,33 +7,10 @@ const AsyncObject = require('@cuties/cutie').AsyncObject
 
 const parseScriptures = (text, pattern) => {
     const matches = text.match(pattern) || [];
+    console.log('m: ', matches, 'len', matches.length)
+    // console.log(text.filter(line=> ))
     return matches
 }
-
-// List all files in dir
-// const getFilesAsync = async (path, filter) =>{
-    //     var files  = []
-    
-//     fs.readdir(path, function(err, items) {
-//         if(!items || items.length === 0)
-//             return;
-
-//         for (var i=0; i<items.length; i++) {
-
-//             var filename = path + '/' + items[i];
-    
-//             files.push(filename)
-
-//             fs.stat(filename, function(err, stats) {
-//                 console.log(filename, ' - size: ' + stats["size"]);
-//             });
-//         }
-//         // console.log('ret')
-//         // return items || {};
-//     });
-
-//     return files
-// }
 
 class ReadDataByPath extends AsyncObject {
 
@@ -43,8 +20,8 @@ class ReadDataByPath extends AsyncObject {
 }
 
 const patterns = {
-    "prefix":"(?<Scripture>[a-zA-Z]+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]+\r*\n)(?<Text>.*?)(?:\r*\n){2}",
-    "postfix": "(?<Text>(?:\").*?)((?<Scripture>\(\w+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}\)\.?))"
+    "prefix": /(?<Scripture>[a-zA-Z]+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]+\r*\n)(?<Text>.*?)(?:\r*\n){2}/gsm,
+    "postfix": /^(?<Text>.*?)(?<Scripture>\(\w+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}\)\.?)/gm
 }
 
 class WrittenFile extends AsyncObject {
@@ -57,19 +34,23 @@ class WrittenFile extends AsyncObject {
 
             // sample: “Every way of a man is right in his own eyes, but the LORD weighs the hearts” (Proverbs 21:2 HNV).            
 
-            let prefixScripture = /(?<Scripture>[a-zA-Z]+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]+\r*\n)(?<Text>.*?)(?:\r*\n){2}/gsm
+            let prefixScripture = /(?<Scripture>[a-zA-Z]+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]+\r*\n)(?<Text>.*?)(?:\r*\n){2}/gsm;
             let postFixScripture = /^(?<Text>.*?)(?<Scripture>\(\w+\s+\d{1,3}:?\d{1,2}-?\d{1,2}\s+[A-Z]{2,4}\)\.?)/gm;         
            
             const prefixed = parseScriptures(content, prefixScripture);
             const postfixed = parseScriptures(content, postFixScripture);
 
-            let result = [ prefixed, postfixed].flat().map(r=>r.trim()).join('\n\n')
-            
-            console.log('resulting text: ', result)
-  
+            const delimiter = '\n\n';
+
+            let result = [ prefixed, postfixed].flat().map(r=>r.trim()).join(delimiter)
+            console.log('resulting text: ', result, '\ntotal', result.split(delimiter).length, 'pre:', prefixed.length, 'post:', postfixed.length)
+
+            {/* let remaining = result.replace(prefixed, '').replace(postfixed, '') */}
+            {/* console.log('remaining bits:', remaining ) */}
+    
             fs.writeFile(path, result, callback)
         }
-    }
+    } 
 
     onResult(){
         return this.path
@@ -80,7 +61,6 @@ class WrittenFile extends AsyncObject {
     }
 }
 
-// async 
 function main () {
 
     if (process.argv.length <= 2) {
@@ -97,20 +77,7 @@ function main () {
     new WrittenFile('./output.txt',
         new ReadDataByPath(files[0], 'utf8')
     )
-    .call()
-
-    // let text = 
-    //     await fs.readFile(filePath, options, (error, buffer) => {
-    //         if (error)
-    //             throw error;
-    //         if (!buffer)
-    //             throw new Error('Buffer could not be initialized!');
-    //         console.log("file data:", data);           
-    //     });
-    // await fs.readFileAsync(files[0])
-
-
-    // parseScriptures(text)
+    .call()    
 }
 
 main()
