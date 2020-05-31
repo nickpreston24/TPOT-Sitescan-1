@@ -1,2 +1,15 @@
 node_modules
 .env
+# Local Netlify folder
+.netlify
+
+
+# production
+client/build/
+**/*/build/
+
+# Jetbrains
+**/*.idea
+
+# Vscode 
+**/*.vscode
