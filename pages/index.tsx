@@ -12,12 +12,14 @@ export default function Home() {
 
   // const [chapter, setChapter] = useState(1);
   const [page, setPage] = useState(1);
-  const { value: chapter, bind: bindChapter } = useInput(1);
+  const { value: chapter, bind: bindChapter, reset: resetChapter } = useInput(1);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log('submited:', chapter, page);
     // getTheoPaper(chapter, page)
+
+    resetChapter();
   }
 
   const handleChange = (event) => {
@@ -25,6 +27,7 @@ export default function Home() {
 
     // console.log('event :>> ', event.target.value);
     console.log('event :>> ', event.target);
+
   }
 
   return <div>
@@ -60,10 +63,10 @@ export default function Home() {
     <button onSubmit={handleSubmit}>Search</button>
     <br />
 
-    <a href={tpotHome} className="card">
+    {/* <a href={tpotHome} className="card">
       <h3>TPOT</h3>
       <p>Go to TPOT</p>
-    </a>
+    </a> */}
   </div>
   // return <SampleComponent title="Index Page" linkTo="/other" />
 }
