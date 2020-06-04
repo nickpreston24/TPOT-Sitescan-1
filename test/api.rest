@@ -41,3 +41,15 @@ content-type: application/json
     "dateCreated": "2-1-2020"
 }
 ###
+
+
+######
+#### NEO4j Local
+######
+GET http://localhost:8080
+
+###
+
+GET http://localhost:8080/paper/neo-is-awesome
+
+###
