@@ -2,7 +2,6 @@ const dummy = { "hello": ", world" }
 
 module.exports = function (neode) {
 
-
     console.log('neode instance: ', !!neode);
 
     const router = require("express").Router();

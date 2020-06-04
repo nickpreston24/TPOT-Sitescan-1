@@ -1,0 +1,1 @@
+{"ast":null,"code":"import React from \"react\";\nvar __jsx = React.createElement;\nimport SampleComponent from '../components/SampleComponent';\nexport default function Other() {\n  return __jsx(SampleComponent, {\n    title: 'Other Page',\n    linkTo: \"/\"\n  });\n}","map":null,"metadata":{},"sourceType":"module"}
